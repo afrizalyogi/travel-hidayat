@@ -47,7 +47,7 @@ session_start();
 
 					<!-- Mobile button -->
 					<?php
-						if (!isset($_SESSION['username'])) {	
+						if (!isset($_SESSION["loggedin"])) {	
 					?>
 					<form action="login.php" class="form-inline d-sm-block d-md-none">
 						<button class='btn btn-login my-2 my-sm-0'>Masuk</button>
@@ -62,7 +62,7 @@ session_start();
 					<?php } ?>
 					<!-- Desktop Button -->
 					<?php
-						if (!isset($_SESSION['username'])) {	
+						if (!isset($_SESSION["loggedin"])) {	
 					?>
 					<form action="login.php" class="form-inline my-2 my-lg-0 d-none d-md-block">
 						<button class='btn btn-login btn-navbar-right my-2 my-sm-0 px-4'>Masuk</button>
@@ -137,7 +137,7 @@ session_start();
 								<div class="travel-location">DERATAN, BALI</div>
 								<div class="travel-button mt-auto">
 								<?php
-									if (isset($_SESSION['username'])) {	
+									if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {	
 								?>
 									<form action="checkout.php" method="get">
 										<button class="btn btn-travel-details px-4" name="deratan">
@@ -163,7 +163,7 @@ session_start();
 								<div class="travel-location">BROMO, MALANG</div>
 								<div class="travel-button mt-auto">
 								<?php
-									if (isset($_SESSION['username'])) {	
+									if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {	
 								?>
 									<form action="checkout.php" method="get">
 										<button class="btn btn-travel-details px-4" name="bromo">
@@ -189,7 +189,7 @@ session_start();
 								<div class="travel-location">NUSA PENIDA</div>
 								<div class="travel-button mt-auto">
 								<?php
-									if (isset($_SESSION['username'])) {	
+									if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {	
 								?>
 									<form action="checkout.php" method="get">
 										<button class="btn btn-travel-details px-4" name="nusa-penida">

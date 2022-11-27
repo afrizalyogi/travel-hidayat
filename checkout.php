@@ -10,7 +10,7 @@ elseif (isset($_GET['nusa-penida'])) {
   $destination = "Nusa Penida";
 }
 else {
-  header("Location: index.php");
+  header("location: index.php");
 }
 ?>
 <!DOCTYPE html>
