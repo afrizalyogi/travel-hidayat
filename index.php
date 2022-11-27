@@ -1,26 +1,6 @@
-<?php      
-    include('db_connect.php');  
-		$count = 0;
-		if (isset($_POST['username']) && isset($_POST['password'])) {
-    $username = $_POST['username'];  
-    $password = $_POST['password'];  
-      
-        //to prevent from mysqli injection  
-        $username = stripcslashes($username);  
-        $password = stripcslashes($password);  
-        $username = mysqli_real_escape_string($con, $username);  
-        $password = mysqli_real_escape_string($con, $password);  
-      
-        $sql = "select * from users where username = '$username' and password = '$password'";  
-        $result = mysqli_query($con, $sql);  
-        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);  
-        $count = mysqli_num_rows($result);  
-          
-        if($count != 1){ 
-          header("Location: login.php");
-        }
-			}     
-?>  
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -67,7 +47,7 @@
 
 					<!-- Mobile button -->
 					<?php
-						if ($count != 1) {	
+						if (!isset($_SESSION['username'])) {	
 					?>
 					<form action="login.php" class="form-inline d-sm-block d-md-none">
 						<button class='btn btn-login my-2 my-sm-0'>Masuk</button>
@@ -82,7 +62,7 @@
 					<?php } ?>
 					<!-- Desktop Button -->
 					<?php
-						if ($count != 1) {	
+						if (!isset($_SESSION['username'])) {	
 					?>
 					<form action="login.php" class="form-inline my-2 my-lg-0 d-none d-md-block">
 						<button class='btn btn-login btn-navbar-right my-2 my-sm-0 px-4'>Masuk</button>
@@ -109,7 +89,7 @@
 				<br />
 				pernah anda rasakan
 			</p>
-			<a href="#" class="btn btn-get-started px-4 mt-4"> Mulai Sekarang </a>
+			<a href="login.php" class="btn btn-get-started px-4 mt-4"> Mulai Sekarang </a>
 		</header>
 		<main>
 			<div class="container">
@@ -157,7 +137,7 @@
 								<div class="travel-location">DERATAN, BALI</div>
 								<div class="travel-button mt-auto">
 								<?php
-									if ($count == 1) {	
+									if (isset($_SESSION['username'])) {	
 								?>
 									<form action="checkout.php" method="get">
 										<button class="btn btn-travel-details px-4" name="deratan">
@@ -183,7 +163,7 @@
 								<div class="travel-location">BROMO, MALANG</div>
 								<div class="travel-button mt-auto">
 								<?php
-									if ($count == 1) {	
+									if (isset($_SESSION['username'])) {	
 								?>
 									<form action="checkout.php" method="get">
 										<button class="btn btn-travel-details px-4" name="bromo">
@@ -209,7 +189,7 @@
 								<div class="travel-location">NUSA PENIDA</div>
 								<div class="travel-button mt-auto">
 								<?php
-									if ($count == 1) {	
+									if (isset($_SESSION['username'])) {	
 								?>
 									<form action="checkout.php" method="get">
 										<button class="btn btn-travel-details px-4" name="nusa-penida">

@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_GET['deratan'])) {
   $destination = "Deratan, Bali";
 }
