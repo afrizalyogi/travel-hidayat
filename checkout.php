@@ -1,17 +1,45 @@
 <?php
 session_start();
+
+$id = 1;
+
 if (isset($_GET['deratan'])) {
-  $destination = "Deratan, Bali";
+  $_SESSION['id_kota_wisata'] = 1;
 }
 elseif (isset($_GET['bromo'])) {
-  $destination = "Bromo, Malang";
+  $_SESSION['id_kota_wisata'] = 2;
 }
 elseif (isset($_GET['nusa-penida'])) {
-  $destination = "Nusa Penida";
+  $_SESSION['id_kota_wisata'] = 3;
 }
-else {
-  header("location: index.php");
+
+require_once "db_connect.php";
+
+$id = $_SESSION['id_kota_wisata'];
+$sql = "SELECT id_paket, kota_wisata, harga FROM paket_wisata WHERE id_paket = '$id';";
+$result = mysqli_query($con, $sql);
+
+$row = mysqli_fetch_assoc($result);
+
+$adultAmount = 0;
+$childAmount = 0;
+
+if (isset($_POST['adultInput'])) {
+	$adultAmount = (int)$_POST['adultInput'];
 }
+
+if (isset($_POST['childInput'])) {
+	$childAmount = (int)$_POST['childInput'];
+}
+$destination = $row['kota_wisata'];
+$adultPrice = $row['harga'];
+$childPrice = $row['harga']/2;
+$unique = rand(100,999);
+$total = (($adultPrice * $adultAmount) + ($childPrice * $childAmount));
+$totalUnique = $total - $unique;
+
+$_SESSION['kota_wisata'] = $destination;
+$_SESSION['total_harga'] = $totalUnique;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,34 +96,40 @@ else {
 						<div class="col-lg-8 pl-lg-0">
 							<div class="card card-details mb-3">
 								<h1>Mulai Perjalanan Anda</h1>
-								<p>Trip to <?=$destination?>, Indonesia</p>
+								<p>
+									Trip to <?=$destination?>, Indonesia
+								</p>
 								<div class="member mt-3">
-									<h2>Dewasa</h2>
-									<form class="form-inline">
+									<form action="checkout.php" method="post">
+										<h2>Dewasa</h2>
 										<label class="sr-only" for="inputPeople">Jumlah</label>
 										<input
 											type="number"
-											class="form-control mb-2 mr-sm-2 w-75"
+											name="adultInput"
+											class="form-control mb-2 mr-sm-2 w-100"
 											id="inputPeople"
+											<?php if (isset($_POST['adultInput'])) { ?>
+												value="<?=$adultAmount?>"
+											<?php } ?>
 											placeholder="Jumlah Anggota" />
-										<button type="submit" class="btn btn-add-now mb-2 px-4">
-											Add Now
-										</button>
-									</form>
-                  <br/>
-                  <h2>Anak-Anak</h2>
-									<form class="form-inline">
-										<label class="sr-only" for="inputPeople">Jumlah</label>
+									<br />
+									<h2>Anak-Anak</h2>
+										<label class="sr-only" for="inputPeople">Jumlah</label>	
 										<input
 											type="number"
-											class="form-control mb-2 mr-sm-2 w-75"
+											name="childInput"
+											class="form-control mb-2 mr-sm-2 w-100"
 											id="inputPeople"
+											<?php if (isset($_POST['childInput'])) { ?>
+											value="<?=$childAmount?>"
+											<?php } ?>
 											placeholder="Jumlah Anggota" />
-										<button type="submit" class="btn btn-add-now mb-2 px-4">
-											Add Now
+											<br/>
+										<button type="submit" class="btn btn-add-now mb-2 px-4 w-100">
+											Masukan
 										</button>
 									</form>
-                  <br/>
+									<br />
 									<h3 class="mt-2 mb-0">Note</h3>
 									<p class="disclaimer mb-0">
 										Kategori anak-anak diperuntukan untuk usia 0-12 tahun.
@@ -109,29 +143,32 @@ else {
 								<table class="trip-informations">
 									<tr>
 										<th width="50%">Dewasa</th>
-										<td width="50%" class="text-right">2 orang</td>
+										<td width="50%" class="text-right"><?=$adultAmount?> orang</td>
 									</tr>
 									<tr>
 										<th width="50%">Anak-Anak</th>
-										<td width="50%" class="text-right">2 anak</td>
+										<td width="50%" class="text-right"><?=$childAmount?> anak</td>
 									</tr>
 									<tr>
 										<th width="50%">Harga Dewasa</th>
-										<td width="50%" class="text-right">Rp 879.000 / orang</td>
+										<td width="50%" class="text-right">Rp <?=number_format((round($adultPrice)/1000),3)?> / orang</td>
 									</tr>
-                  <tr>
+									<tr>
 										<th width="50%">Harga Anak-Anak</th>
-										<td width="50%" class="text-right">Rp 439.000 / anak</td>
+										<td width="50%" class="text-right">Rp <?=number_format((round($childPrice)/1000),3)?> / anak</td>
 									</tr>
 									<tr>
 										<th width="50%">Sub Total</th>
-										<td width="50%" class="text-right">Rp 2.759.000</td>
+										<?php if ($total > 0) { ?>
+										<td width="50%" class="text-right">Rp <?=number_format((round($total)/1000),3)?></td>
+										<?php } ?>
 									</tr>
 									<tr>
 										<th width="50%">Total (+Unique)</th>
 										<td width="50%" class="text-right text-total">
-											<span class="text-blue">Rp 2.758.</span
-											><span class="text-orange">874</span>
+											<?php if ($total > 0) { ?>
+											<span class="text-blue">Rp <?=number_format((round($totalUnique)/1000),3)?></span>
+											<?php } ?>
 										</td>
 									</tr>
 								</table>
@@ -170,7 +207,7 @@ else {
 							</div>
 							<div class="join-container">
 								<a
-									href="success.php"
+									href="checkout_submit.php"
 									class="btn btn-block btn-join-now mt-3 py-2"
 									>Sudah Bayar</a
 								>
