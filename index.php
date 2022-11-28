@@ -311,7 +311,6 @@ session_start();
 				</div>
 			</div>
 		</footer>
-		<script src="libraries/retina/retina.js"></script>
 		<script src="libraries/jquery/jquery-3.4.1.min.js"></script>
 		<script src="libraries/bootstrap/js/bootstrap.js"></script>
 	</body>
