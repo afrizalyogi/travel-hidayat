@@ -249,10 +249,10 @@ session_start();
 							<div class="card card-testimonial text-center">
 								<div class="testimonial-content">
 									<img
-										src="images/avatar-1.png"
+										src="images/avatar-1.jpg"
 										alt=""
 										class="mb-4 rounded-circle" />
-									<h3 class="mb-4">Angga Risky</h3>
+									<h3 class="mb-4">Yogi</h3>
 									<p class="testimonials">
 										“ It was glorious and I could not stop to say wohooo for
 										every single moment Dankeeeeee “
@@ -266,10 +266,10 @@ session_start();
 							<div class="card card-testimonial text-center">
 								<div class="testimonial-content">
 									<img
-										src="images/avatar-2.png"
+										src="images/avatar-2.jpg"
 										alt=""
 										class="mb-4 rounded-circle" />
-									<h3 class="mb-4">Shayna</h3>
+									<h3 class="mb-4">Alvin</h3>
 									<p class="testimonials">
 										“ The trip was amazing and I saw something beautiful in that
 										Island that makes me want to learn more “
@@ -283,10 +283,10 @@ session_start();
 							<div class="card card-testimonial text-center">
 								<div class="testimonial-content mb-auto">
 									<img
-										src="images/avatar-3.png"
+										src="images/avatar-3.jpg"
 										alt=""
 										class="mb-4 rounded-circle" />
-									<h3 class="mb-4">Shabrina</h3>
+									<h3 class="mb-4">Panca</h3>
 									<p class="testimonials">
 										“ I loved it when the waves was shaking harder — I was
 										scared too “
