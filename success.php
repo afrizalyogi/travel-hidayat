@@ -23,7 +23,7 @@
   <div class="container">
 			<nav class="row navbar navbar-expand-lg navbar-light bg-white">
 				<div class="navbar-nav ml-auto mr-auto mr-sm-auto mr-lg-0 mr-md-auto">
-					<a class="navbar-brand" href="index.html">
+					<a class="navbar-brand" href="index.php">
 						<b>Travel Hidayat</b>
 					</a>
 				</div>
